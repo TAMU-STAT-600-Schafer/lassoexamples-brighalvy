@@ -23,7 +23,11 @@ norm2 = as.numeric(crossprod(X[ , 2])/n) # should be 1
 # Scaling of matrix of covariates X so that diag(X'X)/n has 1s
 ############################################################
 # [ToDo] Create Xscaled from X that satisfies the above
+Xscaled <- X
+Xscaled[,1] <- X[,1]/sqrt(norm1)
+Xscaled[,2] <- X[,2]/sqrt(norm2)
 
+apply(Xscaled, 2, \(col) crossprod(col)/n)
 
 
 # Coordinate descent implementation for the case p = 2, same as before but with scaled X
@@ -41,5 +45,5 @@ out = coordinateLasso(Xscaled, Y, beta_start, lambda, niter = niter)
 plot(0:niter, out$fobj_vec)
 
 # [ToDo] Transform out$beta so it can be applied to original X rather than Xscaled
-
+beta_unscaled <- out$beta*c(sqrt(norm1), sqrt(norm2))
 
