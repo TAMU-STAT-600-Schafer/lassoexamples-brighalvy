@@ -24,6 +24,7 @@ Ycenter <- Y - mean(Y)
 
 # [ToDo] Scale centered X (so that n^{-1}X^tX has 1s on the diagonal)
 normX <- diag(crossprod(Xcenter))/n
+normX1 <- colMeans(Xcenter^2) # this is the right way to go about that.
 Xscaled <- Xcenter %*% diag(sqrt(1/normX))
 
 
