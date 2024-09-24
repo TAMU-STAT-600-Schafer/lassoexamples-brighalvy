@@ -1,7 +1,13 @@
 # Soft-thresholding function of scalar x at level lambda, returns S(x, lambda)
 softthresh <- function(x, lambda){
   # [ToDo] Fill in to return S(x, lambda)
-
+  if(x > lambda){
+    return(x - lambda)
+  } else if(x < - lambda){
+    return(x + lambda)
+  } else{
+    return(0)
+  }
 }
 
 
@@ -13,9 +19,9 @@ softthresh <- function(x, lambda){
 lassoobj <- function(X, Y, beta, lambda){
   # [ToDo] Fill in to return f(beta) = (2n)^{-1}\|Y-X\beta\|_2^2 + \lambda \|beta\|_1
   # Get sample size
-
+  n <- nrow(X)
   # Calculate objective
-  
+  fobj <- 1/(2 * n) * as.numeric(crossprod(Y - X%*%beta)) + lambda * sum(abs(beta))
   # Return
   return(fobj)
 }
